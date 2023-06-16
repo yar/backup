@@ -80,7 +80,7 @@ module Backup
         before { allow(model).to receive(:exit_status).and_return(0) }
 
         it "sends a Success message" do
-          expect(Utilities).to receive(:run).with("echo '#{zabbix_msg}' | #{zabbix_cmd}")
+          expect(Utilities).to receive(:run).with(zabbix_cmd)
           notifier.send(:notify!, :success)
         end
       end
@@ -102,7 +102,7 @@ module Backup
         before { allow(model).to receive(:exit_status).and_return(1) }
 
         it "sends a Warning message" do
-          expect(Utilities).to receive(:run).with("echo '#{zabbix_msg}' | #{zabbix_cmd}")
+          expect(Utilities).to receive(:run).with(zabbix_cmd)
           notifier.send(:notify!, :warning)
         end
       end
@@ -124,7 +124,7 @@ module Backup
         before { allow(model).to receive(:exit_status).and_return(2) }
 
         it "sends a Failure message" do
-          expect(Utilities).to receive(:run).with("echo '#{zabbix_msg}' | #{zabbix_cmd}")
+          expect(Utilities).to receive(:run).with(zabbix_cmd)
           notifier.send(:notify!, :failure)
         end
       end

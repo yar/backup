@@ -47,13 +47,14 @@ module Backup
 
       def send_message(message)
         msg = [service_host, service_name, model.exit_status, message].join("\t")
+        escaped_msg = msg.gsub("'"){"\\'"}
         cmd = utility(:zabbix_sender).to_s +
           " -z '#{zabbix_host}'" \
           " -p '#{zabbix_port}'" \
           " -s #{service_host}"  \
           " -k #{item_key}"      \
-          " -o '#{msg}'"
-        run("echo '#{msg}' | #{cmd}")
+          " -o '#{escaped_msg}'"
+        run(cmd)
       end
     end
   end
